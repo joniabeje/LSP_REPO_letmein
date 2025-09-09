@@ -1,0 +1,26 @@
+AI Usage Summary for Assignment 2 - CSV ETL Pipeline
+
+1) Brief summary of AI usage:
+   AI was used to assist with generating sample product data, writing code comments, creating documentation, and implementing parts of the ETL pipeline logic.
+
+2) Specific AI assistance provided:
+
+   a) Sample Data Generation:
+      Prompt: "Generate 6 diverse sample products with reasonable prices across different categories for testing our ETL pipeline"
+      AI Response: Provided product names, prices, and categories including Wireless Mouse ($45.99, Electronics), Java Programming Textbook ($89.95, Education), Gaming Keyboard ($129.99, Electronics), etc.
+      Usage: Used the AI-generated product data directly as test input in products.csv for comprehensive testing.
+
+   b) Code Documentation:
+      Prompt: "Help me write clear JavaDoc comments for my ETL pipeline methods"
+      AI Response: Provided structured comments explaining method purposes, parameters, and return values for extract(), transform(), and load() methods.
+      Usage: Incorporated AI-suggested comments to improve code readability and documentation standards.
+
+   c) Project Documentation:
+      Prompt: "Create a concise README for an ETL pipeline project that includes how to run it and key features"
+      AI Response: Generated structured README content with sections for overview, how to run, transformations, and error handling.
+      Usage: Used AI-generated content as the foundation for Assignment2_README.md, adapted to match our specific implementation.
+
+   d) Implementation Assistance:
+      Prompt: "How to implement precise decimal rounding in Java using BigDecimal for financial calculations"
+      AI Response: Explained BigDecimal.setScale() with RoundingMode.HALF_UP for accurate rounding.
+      Usage: Applied the BigDecimal approach in our price calculation logic to ensure precise rounding as required.
