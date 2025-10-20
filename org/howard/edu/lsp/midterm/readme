@@ -225,6 +225,20 @@ Each car can be built to one of three trim levels: Base, Luxury or Sport. They c
 Task:
 a)	Explain in detail why the current structure does or does not support this. (10 pts.)
 
+The current structure does NOT support dynamic trim-level changes during the manufacturing process. This limitation exists because the design uses inheritance to represent trim levels, where each trim level (Base, Sports, Luxury) is implemented as a separate class that extends the Car class.
+
+The fundamental problem with this approach is that inheritance creates a rigid, static relationship between objects and their types. Once a car object is instantiated as a specific trim level class (for example, as a Base car), it cannot be transformed into a different trim level (such as Sports or Luxury) without creating an entirely new object. The object's type is determined at creation time and remains fixed throughout its lifetime.
+
+In the current design, if a customer decides to change from a Base trim to a Luxury trim during manufacturing, the system would need to:
+1. Create a new Luxury car object
+2. Copy all relevant data from the existing Base car object
+3. Discard the original Base car object
+4. Update all references to point to the new Luxury car object
+
+This process is not only inefficient but also introduces significant complexity and potential for errors. The system would need to handle data migration, ensure no references are lost, and manage the lifecycle of multiple objects for what should be a simple configuration change.
+
+Furthermore, this approach violates the principle of object identity, as the car would essentially become a different object rather than the same car with a modified configuration. This could cause issues with tracking, logging, and maintaining relationships with other parts of the manufacturing system.
+
 b)	Describe how to refactor the structure to allow trim-level change for a car to dynamically change.  Hint: How would you modify Car to use composition to solve the problem? (10 pts.)
 
 
