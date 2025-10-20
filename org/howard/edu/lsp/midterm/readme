@@ -241,6 +241,46 @@ Furthermore, this approach violates the principle of object identity, as the car
 
 b)	Describe how to refactor the structure to allow trim-level change for a car to dynamically change.  Hint: How would you modify Car to use composition to solve the problem? (10 pts.)
 
+To enable dynamic trim-level changes, the structure should be refactored to use composition instead of inheritance. The key insight is to treat trim levels as configurable components rather than defining the car's type.
+
+The refactored design would involve the following changes:
+
+1. Create a TrimLevel interface or abstract class: Define a common interface that all trim levels must implement, containing methods like getFeatures(), getPrice(), getInteriorType(), etc.
+
+2. Implement concrete trim level classes: Create BaseTrim, SportsTrim, and LuxuryTrim classes that implement the TrimLevel interface, each containing the specific features and behaviors for that trim level.
+
+3. Modify the Car class to use composition: Instead of having separate Car subclasses, create a single Car class that contains a TrimLevel field. The Car class would have methods like setTrimLevel(TrimLevel newTrim), getTrimLevel(), and getTrimFeatures().
+
+4. Maintain the Engine composition: Keep the existing Engine hierarchy as it already uses composition effectively, where a Car contains an Engine reference.
+
+This refactored approach provides several advantages:
+
+- Dynamic changes: A car can change its trim level at runtime by simply calling setTrimLevel() with a new TrimLevel object
+- Single object identity: The same Car object persists throughout its lifecycle, maintaining all relationships and tracking information
+- Flexibility: New trim levels can be added without modifying existing code, following the Open/Closed Principle
+- Simplified object management: No need to create new objects or manage complex data migration
+- Better encapsulation: Trim-specific behavior is encapsulated within the appropriate TrimLevel implementation
+
+The refactored Car class would look conceptually like:
+```java
+public class Car {
+    private TrimLevel trimLevel;
+    private Engine engine;
+    private String vin;
+    // other car properties
+    
+    public void setTrimLevel(TrimLevel newTrim) {
+        this.trimLevel = newTrim;
+    }
+    
+    public TrimLevel getTrimLevel() {
+        return trimLevel;
+    }
+}
+```
+
+This composition-based approach transforms trim levels from defining the car's type to being a configurable aspect of the car, enabling the dynamic changes required by the manufacturing process.
+
 
 Question 4. (30 pts.)
 
