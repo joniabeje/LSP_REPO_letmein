@@ -1,0 +1,130 @@
+MIDTERM ESSAY ANSWERS
+
+Question 1. (20 pts.)
+
+a) Should a well-designed class have high or low cohesion? Explain and defend your answer. (5 pts.)
+
+A well-designed class should have HIGH COHESION. High cohesion means that all methods and data within a class work together toward a single, well-defined purpose or responsibility. This principle is fundamental to good object-oriented design and provides several important benefits.
+
+High cohesion ensures that classes remain organized and purposeful. When all components of a class fit together logically, the resulting system demonstrates several key advantages:
+
+First, it follows the Single Responsibility Principle: each class has one clear responsibility, so when changes are needed, developers know exactly where to look. This makes the system significantly more maintainable.
+
+Second, it reduces coupling between classes. When methods within a class are related, there is less need to depend on external classes, resulting in fewer dependencies and reduced complexity.
+
+Third, highly cohesive classes are more reusable. Since all functionality is focused and complete, the entire class can be used as a unit rather than requiring selective method usage.
+
+Fourth, testing and debugging become more straightforward. When all methods serve a common purpose, the class can be tested as a cohesive unit, and issues are typically contained within that specific domain.
+
+Finally, it improves code organization and readability. When examining a class, developers can immediately understand its purpose because all components are related.
+
+Conversely, low cohesion creates problematic "god classes" that attempt to handle multiple unrelated responsibilities. These classes are difficult to understand, maintain, and test because they contain a random collection of unrelated methods. The goal is to achieve functional cohesion where all methods work together to accomplish one clear, well-defined task.
+
+b) Based on your analysis, discuss—only if you believe changes are needed—how you would reorganize or redesign the class to improve its structure. Your answer should (1) identify the class as having high, low or perfect cohesion and (2) describe a general approach to refactoring the class. If you believe the class already has good cohesion, justify why no changes are necessary. (15 pts)
+
+The StudentPortalHelper class demonstrates LOW COHESION and requires significant refactoring. Using Arthur Riel's cohesion heuristics, this class exhibits primarily coincidental cohesion, where methods are grouped together without meaningful relationships.
+
+Cohesion Analysis:
+The class contains methods that serve completely different domains with no logical relationship. The computeGPA method handles academic calculations, exportRosterToCsv manages file I/O operations, makeWelcomeEmail handles email formatting, formatDateForUi deals with UI formatting, processTuitionPayment handles payment processing, isStrongPassword performs security validation, and the cache methods manage data storage. These diverse responsibilities indicate coincidental cohesion.
+
+The only evidence of any meaningful cohesion is weak communicational cohesion between the putCache and getCache methods, which share the same data structure. However, this minimal cohesion does not justify keeping all these unrelated methods together in a single class.
+
+Refactoring Approach:
+The class should be decomposed into multiple, highly cohesive classes following the Single Responsibility Principle. Each new class would focus on a specific domain of functionality:
+
+1. AcademicCalculator: Contains the computeGPA method for academic-related calculations and could be extended with other grade-related functionality.
+
+2. FileExporter: Contains the exportRosterToCsv method for file I/O operations and could include additional export methods for different data formats.
+
+3. EmailService: Contains the makeWelcomeEmail method and other email-related functionality such as notification templates and email validation.
+
+4. UIFormatter: Contains the formatDateForUi method and other UI formatting utilities for consistent presentation across the application.
+
+5. PaymentProcessor: Contains the processTuitionPayment method and related payment functionality including transaction logging and payment validation.
+
+6. SecurityValidator: Contains the isStrongPassword method and other security validation utilities such as input sanitization and authentication checks.
+
+7. CacheManager: Contains the putCache and getCache methods along with additional caching functionality such as cache expiration and memory management.
+
+This refactoring would transform the low-cohesion utility class into multiple highly cohesive classes, each with a single, well-defined responsibility. Each class would be easier to test, maintain, and extend independently. The original class could be replaced with a facade pattern if a single entry point is needed, or the methods could be accessed directly from their respective specialized classes.
+
+Question 3. (20 pts.)
+
+a) Explain in detail why the current structure does or does not support this. (10 pts.)
+
+The current structure does NOT support dynamic trim-level changes during the manufacturing process. This limitation exists because the design uses inheritance to represent trim levels, where each trim level (Base, Sports, Luxury) is implemented as a separate class that extends the Car class.
+
+The fundamental problem with this approach is that inheritance creates a rigid, static relationship between objects and their types. Once a car object is instantiated as a specific trim level class (for example, as a Base car), it cannot be transformed into a different trim level (such as Sports or Luxury) without creating an entirely new object. The object's type is determined at creation time and remains fixed throughout its lifetime.
+
+In the current design, if a customer decides to change from a Base trim to a Luxury trim during manufacturing, the system would need to:
+1. Create a new Luxury car object
+2. Copy all relevant data from the existing Base car object
+3. Discard the original Base car object
+4. Update all references to point to the new Luxury car object
+
+This process is not only inefficient but also introduces significant complexity and potential for errors. The system would need to handle data migration, ensure no references are lost, and manage the lifecycle of multiple objects for what should be a simple configuration change.
+
+Furthermore, this approach violates the principle of object identity, as the car would essentially become a different object rather than the same car with a modified configuration. This could cause issues with tracking, logging, and maintaining relationships with other parts of the manufacturing system.
+
+b) Describe how to refactor the structure to allow trim-level change for a car to dynamically change. Hint: How would you modify Car to use composition to solve the problem? (10 pts.)
+
+To enable dynamic trim-level changes, the structure should be refactored to use composition instead of inheritance. The key insight is to treat trim levels as configurable components rather than defining the car's type.
+
+The refactored design would involve the following changes:
+
+1. Create a TrimLevel interface or abstract class: Define a common interface that all trim levels must implement, containing methods like getFeatures(), getPrice(), getInteriorType(), etc.
+
+2. Implement concrete trim level classes: Create BaseTrim, SportsTrim, and LuxuryTrim classes that implement the TrimLevel interface, each containing the specific features and behaviors for that trim level.
+
+3. Modify the Car class to use composition: Instead of having separate Car subclasses, create a single Car class that contains a TrimLevel field. The Car class would have methods like setTrimLevel(TrimLevel newTrim), getTrimLevel(), and getTrimFeatures().
+
+4. Maintain the Engine composition: Keep the existing Engine hierarchy as it already uses composition effectively, where a Car contains an Engine reference.
+
+This refactored approach provides several advantages:
+
+- Dynamic changes: A car can change its trim level at runtime by simply calling setTrimLevel() with a new TrimLevel object
+- Single object identity: The same Car object persists throughout its lifecycle, maintaining all relationships and tracking information
+- Flexibility: New trim levels can be added without modifying existing code, following the Open/Closed Principle
+- Simplified object management: No need to create new objects or manage complex data migration
+- Better encapsulation: Trim-specific behavior is encapsulated within the appropriate TrimLevel implementation
+
+The refactored Car class would look conceptually like:
+```java
+public class Car {
+    private TrimLevel trimLevel;
+    private Engine engine;
+    private String vin;
+    // other car properties
+    
+    public void setTrimLevel(TrimLevel newTrim) {
+        this.trimLevel = newTrim;
+    }
+    
+    public TrimLevel getTrimLevel() {
+        return trimLevel;
+    }
+}
+```
+
+This composition-based approach transforms trim levels from defining the car's type to being a configurable aspect of the car, enabling the dynamic changes required by the manufacturing process.
+
+Question 4 Rationale (6 pts.)
+
+• Why is Device defined as an abstract class?
+
+Device is defined as an abstract class because it provides common functionality (id, location, heartbeat, connection status) that all devices share, while requiring each concrete device to implement its own specific getStatus() method. This allows for code reuse while ensuring that each device type provides its own status representation.
+
+• How do the Networked and BatteryPowered interfaces add behavior to your concrete classes?
+
+The Networked and BatteryPowered interfaces add specific capabilities to devices that need them. Networked devices can connect/disconnect and report connection status, while BatteryPowered devices can manage battery levels. This allows devices like DoorLock and Camera to have both networking and battery capabilities, while Thermostat only has networking capabilities.
+
+• Is this design an example of multiple inheritance in Java? Explain why or why not.
+
+No, this is not multiple inheritance. Java only supports single inheritance for classes (Device can only extend one class), but it supports multiple interface implementation. The concrete classes extend one abstract class (Device) and implement multiple interfaces (Networked, BatteryPowered), which is interface-based behavior composition rather than true multiple inheritance.
+
+Question 5 (10 pts)
+Reflection on AI Use in Learning and Problem Solving
+
+Throughout this course, I've used AI tools primarily as a learning companion and conceptual guide rather than a solution provider. For instance, when working on inheritance concepts, I would ask AI to walk me through the principles step by step, then request practice problems to test my understanding. The AI would then guide me through my attempts, pointing out where I might be going wrong and helping me get back on track when I was stuck. This interactive learning approach was particularly valuable for understanding complex topics like cohesion analysis and UML design patterns, where I could ask follow-up questions and get immediate clarification on specific aspects I didn't fully grasp. The ability to have a detailed conversation about programming concepts, with the AI challenging my reasoning and providing alternative perspectives, felt like having a knowledgeable study partner available 24/7.
+
+Looking ahead, I see AI fundamentally changing how I approach problem-solving by providing a collaborative thinking environment. Rather than working in isolation, I can now engage in what feels like team discussions where I present my reasoning, ask the AI to challenge my assumptions, and we work together to reach well-reasoned conclusions. This collaborative approach helps me catch biases in my thinking and consider angles I might have overlooked. However, I'm also aware of AI's limitations: its responses are ultimately constrained by its training data and the perspectives of its creators, which means it can sometimes provide biased or incomplete information. The key is maintaining critical thinking skills and using AI as a tool to enhance rather than replace my own analytical abilities. As AI continues to evolve, I expect it will become an increasingly valuable partner in both academic and professional problem-solving, but the responsibility for final decisions and understanding will always remain with the human user.
