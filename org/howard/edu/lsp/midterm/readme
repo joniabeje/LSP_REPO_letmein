@@ -130,6 +130,32 @@ Conversely, low cohesion creates problematic "god classes" that attempt to handl
 
 b) Based on your analysis, discuss—only if you believe changes are needed—how you would reorganize or redesign the class to improve its structure. Your answer should (1) identify the class as having high, low or perfect cohesion and (2) describe a general approach to refactoring the class.  If you believe the class already has good cohesion, justify why no changes are necessary. (15 pts)
 
+The StudentPortalHelper class demonstrates LOW COHESION and requires significant refactoring. Using Arthur Riel's cohesion heuristics, this class exhibits primarily coincidental cohesion, where methods are grouped together without meaningful relationships.
+
+Cohesion Analysis:
+The class contains methods that serve completely different domains with no logical relationship. The computeGPA method handles academic calculations, exportRosterToCsv manages file I/O operations, makeWelcomeEmail handles email formatting, formatDateForUi deals with UI formatting, processTuitionPayment handles payment processing, isStrongPassword performs security validation, and the cache methods manage data storage. These diverse responsibilities indicate coincidental cohesion.
+
+The only evidence of any meaningful cohesion is weak communicational cohesion between the putCache and getCache methods, which share the same data structure. However, this minimal cohesion does not justify keeping all these unrelated methods together in a single class.
+
+Refactoring Approach:
+The class should be decomposed into multiple, highly cohesive classes following the Single Responsibility Principle. Each new class would focus on a specific domain of functionality:
+
+1. AcademicCalculator: Contains the computeGPA method for academic-related calculations and could be extended with other grade-related functionality.
+
+2. FileExporter: Contains the exportRosterToCsv method for file I/O operations and could include additional export methods for different data formats.
+
+3. EmailService: Contains the makeWelcomeEmail method and other email-related functionality such as notification templates and email validation.
+
+4. UIFormatter: Contains the formatDateForUi method and other UI formatting utilities for consistent presentation across the application.
+
+5. PaymentProcessor: Contains the processTuitionPayment method and related payment functionality including transaction logging and payment validation.
+
+6. SecurityValidator: Contains the isStrongPassword method and other security validation utilities such as input sanitization and authentication checks.
+
+7. CacheManager: Contains the putCache and getCache methods along with additional caching functionality such as cache expiration and memory management.
+
+This refactoring would transform the low-cohesion utility class into multiple highly cohesive classes, each with a single, well-defined responsibility. Each class would be easier to test, maintain, and extend independently. The original class could be replaced with a facade pattern if a single entry point is needed, or the methods could be accessed directly from their respective specialized classes.
+
 Question 2. (20 pts.)
 
 Write a class AreaCalculator in the package org.howard.edu.lsp.midterm.question2 with the following overloaded methods:  This should be uploaded to your repo.
