@@ -540,8 +540,16 @@ public class Main {
 5) Brief Rationale (2–4 sentences)
 
 •	Why is Device defined as an abstract class? 
+
+Device is defined as an abstract class because it provides common functionality (id, location, heartbeat, connection status) that all devices share, while requiring each concrete device to implement its own specific getStatus() method. This allows for code reuse while ensuring that each device type provides its own status representation.
+
 •	How do the Networked and BatteryPowered interfaces add behavior to your concrete classes?
+
+The Networked and BatteryPowered interfaces add specific capabilities to devices that need them. Networked devices can connect/disconnect and report connection status, while BatteryPowered devices can manage battery levels. This allows devices like DoorLock and Camera to have both networking and battery capabilities, while Thermostat only has networking capabilities.
+
 •	Is this design an example of multiple inheritance in Java? Explain why or why not.
+
+No, this is not multiple inheritance. Java only supports single inheritance for classes (Device can only extend one class), but it supports multiple interface implementation. The concrete classes extend one abstract class (Device) and implement multiple interfaces (Networked, BatteryPowered), which is interface-based behavior composition rather than true multiple inheritance.
 
 Grading (30 pts)
 
