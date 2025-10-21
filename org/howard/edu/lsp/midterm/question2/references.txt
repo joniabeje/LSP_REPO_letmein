@@ -1,0 +1,13 @@
+References for Question 2 — AreaCalculator
+
+Primary Resources
+• Oracle Java Docs: Math.PI — https://docs.oracle.com/javase/8/docs/api/java/lang/Math.html#PI
+• Oracle Java Docs: IllegalArgumentException — https://docs.oracle.com/javase/8/docs/api/java/lang/IllegalArgumentException.html
+• Oracle Java Tutorials: Method Overloading — https://docs.oracle.com/javase/tutorial/java/javaOO/methods.html
+
+AI Usage
+• Full transcript: ../../doc/ai_transcript.txt
+• Used for confirming area formulas, exception handling, and reasoning for method overloading.
+
+Notes
+• No external libraries used. All implementations rely on core Java SE features.
