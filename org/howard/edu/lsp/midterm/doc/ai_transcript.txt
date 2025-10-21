@@ -1,8 +1,8 @@
-AI TRANSCRIPT - MIDTERM ASSISTANCE
+AI Transcript
 
 This document contains examples of prompts and AI interactions that aided in completing the midterm exam. These represent the types of conversations that helped clarify concepts and guide problem-solving approaches.
 
-QUESTION 1 - COHESION ANALYSIS
+Question 1 - Cohesion Analysis
 
 Prompt: "I need to analyze the cohesion of a StudentPortalHelper class using Arthur Riel's heuristics. The class has methods for GPA calculation, CSV export, email formatting, date formatting, payment processing, password validation, and caching. Can you walk me through how to apply cohesion heuristics to this?"
 
@@ -10,7 +10,7 @@ AI Response: "Let me help you analyze this step by step. First, let's identify t
 
 Follow-up: "I understand it has low cohesion, but I'm not sure how to approach refactoring it. Can you walk me through how I would break this down using the Single Responsibility Principle?"
 
-QUESTION 2 - METHOD OVERLOADING
+Question 2 - Method Overloading
 
 Prompt: "I need to create an AreaCalculator class with overloaded methods for different shapes. Can you explain why overloading is better than separate method names like circleArea(), rectangleArea()?"
 
@@ -18,7 +18,7 @@ AI Response: "Method overloading provides a cleaner API because all methods perf
 
 Follow-up: "That makes sense, but I'm struggling with how to explain this in my code comments. Can you help me think through how to articulate why overloading is better than separate method names?"
 
-QUESTION 3 - UML DESIGN ANALYSIS
+Question 3 - UML Design Analysis
 
 Prompt: "I have a UML diagram showing Car inheritance hierarchy with Base, Sports, Luxury subclasses, and separate Engine hierarchy. The requirement is to allow dynamic trim-level changes during manufacturing. Can you help me analyze why the current structure doesn't support this?"
 
@@ -26,14 +26,13 @@ AI Response: "The current inheritance-based design creates rigid object types th
 
 Follow-up: "I see the problem with inheritance, but I'm not sure how to solve it. Can you help me understand how composition would work here to allow dynamic changes?"
 
-QUESTION 4 - INHERITANCE AND INTERFACES
+Question 4 - Inheritence and Interfaces
 
 Prompt: "I need to create a smart campus device system with an abstract Device class and interfaces for Networked and BatteryPowered. Can you help me understand how to properly implement multiple interfaces while extending an abstract class?"
 
 AI Response: "In Java, you can extend one class and implement multiple interfaces. Let me show you how to structure this properly. The Device abstract class provides common functionality like id, location, heartbeat, and connection status that all devices share, while requiring each concrete device to implement its own specific getStatus() method. The Networked interface adds connectivity capabilities (connect, disconnect, isConnected), and the BatteryPowered interface adds battery management (getBatteryPercent, setBatteryPercent). A device like DoorLock can extend Device and implement both Networked and BatteryPowered interfaces, while Thermostat might only implement Networked. This design allows for code reuse through inheritance while providing flexible behavior through interfaces. You'll need to make sure each concrete class calls super(id, location) in its constructor and properly implements all required methods from both the abstract class and interfaces."
 
 Follow-up: "I'm confused about some of the concepts here. Can you help me understand why Device should be abstract and whether this design involves multiple inheritance?"
-
 
 Throughout the exam, AI was used as a:
 - Conceptual guide for understanding complex topics
