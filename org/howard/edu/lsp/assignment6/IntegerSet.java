@@ -1,6 +1,7 @@
 package org.howard.edu.lsp.assignment6;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class IntegerSet  {
@@ -30,10 +31,20 @@ public class IntegerSet  {
   }
 
   // Returns the largest item in the set (throws IllegalStateException if empty).
-  public int largest()  { return 0; }
+  public int largest()  { 
+    if (set.isEmpty()) {
+      throw new IllegalStateException("Set is empty");
+    }
+    return Collections.max(set);
+  }
 
   // Returns the smallest item in the set (throws IllegalStateException if empty).
-  public int smallest()  { return 0; }
+  public int smallest()  { 
+    if (set.isEmpty()) {
+      throw new IllegalStateException("Set is empty");
+    }
+    return Collections.min(set);
+  }
 
   // Adds an item to the set or does nothing if already present.
   public void add(int item) { 

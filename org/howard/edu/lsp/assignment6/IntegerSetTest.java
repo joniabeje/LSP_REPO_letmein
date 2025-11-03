@@ -107,5 +107,37 @@ public class IntegerSetTest {
     assertEquals("[]", set1.toString());
   }
   
+  // Test largest()
+  @Test
+  public void testLargest() {
+    // Test exception on empty set
+    assertThrows(IllegalStateException.class, () -> set1.largest());
+    
+    set1.add(3);
+    assertEquals(3, set1.largest());
+    set1.add(1);
+    assertEquals(3, set1.largest());
+    set1.add(5);
+    assertEquals(5, set1.largest());
+    set1.add(2);
+    assertEquals(5, set1.largest());
+  }
+  
+  // Test smallest()
+  @Test
+  public void testSmallest() {
+    // Test exception on empty set
+    assertThrows(IllegalStateException.class, () -> set1.smallest());
+    
+    set1.add(3);
+    assertEquals(3, set1.smallest());
+    set1.add(1);
+    assertEquals(1, set1.smallest());
+    set1.add(5);
+    assertEquals(1, set1.smallest());
+    set1.add(2);
+    assertEquals(1, set1.smallest());
+  }
+  
 }
 
