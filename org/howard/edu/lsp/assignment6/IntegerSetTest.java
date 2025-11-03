@@ -139,5 +139,51 @@ public class IntegerSetTest {
     assertEquals(1, set1.smallest());
   }
   
+  // Test equals()
+  @Test
+  public void testEquals() {
+    // Equal empty sets
+    assertTrue(set1.equals(set2));
+    
+    // Same reference
+    assertTrue(set1.equals(set1));
+    
+    // Null check
+    assertFalse(set1.equals(null));
+    
+    // Non-IntegerSet object
+    assertFalse(set1.equals("not a set"));
+    
+    // Sets with same elements in different order
+    set1.add(1);
+    set1.add(2);
+    set1.add(3);
+    
+    set2.add(3);
+    set2.add(1);
+    set2.add(2);
+    
+    assertTrue(set1.equals(set2));
+    
+    // Sets with different elements
+    set2.add(4);
+    assertFalse(set1.equals(set2));
+    
+    // Sets with same size but different elements
+    set1.clear();
+    set2.clear();
+    set1.add(1);
+    set1.add(2);
+    set2.add(2);
+    set2.add(3);
+    assertFalse(set1.equals(set2));
+    
+    // Empty vs non-empty
+    set1.clear();
+    set2.clear();
+    set1.add(1);
+    assertFalse(set1.equals(set2));
+  }
+  
 }
 

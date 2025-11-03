@@ -23,7 +23,19 @@ public class IntegerSet  {
    * This overrides the equals method from the Object class.
    */
   @Override
-  public boolean equals(Object o) { return false; }
+  public boolean equals(Object o) { 
+    if (this == o) {
+      return true;
+    }
+    if (o == null || !(o instanceof IntegerSet)) {
+      return false;
+    }
+    IntegerSet other = (IntegerSet) o;
+    if (this.set.size() != other.set.size()) {
+      return false;
+    }
+    return this.set.containsAll(other.set) && other.set.containsAll(this.set);
+  }
 
   // Returns true if the set contains the value, otherwise false.
   public boolean contains(int value) { 
