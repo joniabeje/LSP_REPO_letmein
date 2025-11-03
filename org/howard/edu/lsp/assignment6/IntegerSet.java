@@ -71,16 +71,29 @@ public class IntegerSet  {
   }
 
   // Set union: modifies this to contain all unique elements in this or other.
-  public void union(IntegerSet other) { }
+  public void union(IntegerSet other) { 
+    for (Integer item : other.set) {
+      this.add(item);
+    }
+  }
 
   // Set intersection: modifies this to contain only elements in both sets.
-  public void intersect(IntegerSet other) { }
+  public void intersect(IntegerSet other) { 
+    set.retainAll(other.set);
+  }
 
   // Set difference (this \ other): modifies this to remove elements found in other.
-  public void diff(IntegerSet other) { }
+  public void diff(IntegerSet other) { 
+    set.removeAll(other.set);
+  }
 
   // Set complement: modifies this to become (other \ this).
-  public void complement(IntegerSet other) { }
+  public void complement(IntegerSet other) { 
+    List<Integer> temp = new ArrayList<Integer>(other.set);
+    temp.removeAll(this.set);
+    this.set.clear();
+    this.set.addAll(temp);
+  }
 
   // Returns true if the set is empty, false otherwise.
   public boolean isEmpty() { 

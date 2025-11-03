@@ -185,5 +185,204 @@ public class IntegerSetTest {
     assertFalse(set1.equals(set2));
   }
   
+  // Test union()
+  @Test
+  public void testUnion() {
+    // Union with disjoint sets
+    set1.add(1);
+    set1.add(2);
+    set2.add(3);
+    set2.add(4);
+    set1.union(set2);
+    assertEquals(4, set1.length());
+    assertTrue(set1.contains(1));
+    assertTrue(set1.contains(2));
+    assertTrue(set1.contains(3));
+    assertTrue(set1.contains(4));
+    
+    // Union with overlapping sets
+    set1.clear();
+    set2.clear();
+    set1.add(1);
+    set1.add(2);
+    set2.add(2);
+    set2.add(3);
+    set1.union(set2);
+    assertEquals(3, set1.length());
+    assertTrue(set1.contains(1));
+    assertTrue(set1.contains(2));
+    assertTrue(set1.contains(3));
+    
+    // Union with self
+    set1.clear();
+    set1.add(1);
+    set1.add(2);
+    int originalLength = set1.length();
+    set1.union(set1);
+    assertEquals(originalLength, set1.length());
+    assertTrue(set1.contains(1));
+    assertTrue(set1.contains(2));
+    
+    // Union with empty set
+    set1.clear();
+    set2.clear();
+    set1.add(1);
+    set1.add(2);
+    set1.union(set2);
+    assertEquals(2, set1.length());
+  }
+  
+  // Test intersect()
+  @Test
+  public void testIntersect() {
+    // Intersect with disjoint sets (should become empty)
+    set1.add(1);
+    set1.add(2);
+    set2.add(3);
+    set2.add(4);
+    set1.intersect(set2);
+    assertTrue(set1.isEmpty());
+    
+    // Intersect with overlapping sets
+    set1.clear();
+    set2.clear();
+    set1.add(1);
+    set1.add(2);
+    set1.add(3);
+    set2.add(2);
+    set2.add(3);
+    set2.add(4);
+    set1.intersect(set2);
+    assertEquals(2, set1.length());
+    assertTrue(set1.contains(2));
+    assertTrue(set1.contains(3));
+    assertFalse(set1.contains(1));
+    assertFalse(set1.contains(4));
+    
+    // Intersect with identical set
+    set1.clear();
+    set2.clear();
+    set1.add(1);
+    set1.add(2);
+    set2.add(1);
+    set2.add(2);
+    set1.intersect(set2);
+    assertEquals(2, set1.length());
+    assertTrue(set1.contains(1));
+    assertTrue(set1.contains(2));
+    
+    // Intersect with self
+    set1.clear();
+    set1.add(1);
+    set1.add(2);
+    set1.intersect(set1);
+    assertEquals(2, set1.length());
+    
+    // Intersect with empty set
+    set1.clear();
+    set2.clear();
+    set1.add(1);
+    set1.intersect(set2);
+    assertTrue(set1.isEmpty());
+  }
+  
+  // Test diff()
+  @Test
+  public void testDiff() {
+    // Normal difference
+    set1.add(1);
+    set1.add(2);
+    set1.add(3);
+    set2.add(2);
+    set2.add(4);
+    set1.diff(set2);
+    assertEquals(2, set1.length());
+    assertTrue(set1.contains(1));
+    assertTrue(set1.contains(3));
+    assertFalse(set1.contains(2));
+    
+    // Diff with empty set (should remain unchanged)
+    set1.clear();
+    set2.clear();
+    set1.add(1);
+    set1.add(2);
+    set1.diff(set2);
+    assertEquals(2, set1.length());
+    
+    // Diff when other equals this (should become empty)
+    set1.clear();
+    set2.clear();
+    set1.add(1);
+    set1.add(2);
+    set2.add(1);
+    set2.add(2);
+    set1.diff(set2);
+    assertTrue(set1.isEmpty());
+    
+    // Diff with disjoint sets (should remain unchanged)
+    set1.clear();
+    set2.clear();
+    set1.add(1);
+    set1.add(2);
+    set2.add(3);
+    set2.add(4);
+    set1.diff(set2);
+    assertEquals(2, set1.length());
+  }
+  
+  // Test complement()
+  @Test
+  public void testComplement() {
+    // Normal complement
+    set1.add(1);
+    set1.add(2);
+    set2.add(2);
+    set2.add(3);
+    set2.add(4);
+    set1.complement(set2);
+    assertEquals(2, set1.length());
+    assertTrue(set1.contains(3));
+    assertTrue(set1.contains(4));
+    assertFalse(set1.contains(1));
+    assertFalse(set1.contains(2));
+    
+    // Complement with disjoint sets
+    set1.clear();
+    set2.clear();
+    set1.add(1);
+    set1.add(2);
+    set2.add(3);
+    set2.add(4);
+    set1.complement(set2);
+    assertEquals(2, set1.length());
+    assertTrue(set1.contains(3));
+    assertTrue(set1.contains(4));
+    
+    // Complement when this is empty
+    set1.clear();
+    set2.clear();
+    set2.add(1);
+    set2.add(2);
+    set1.complement(set2);
+    assertEquals(2, set1.length());
+    assertTrue(set1.contains(1));
+    assertTrue(set1.contains(2));
+    
+    // Complement with self (should become empty)
+    set1.clear();
+    set1.add(1);
+    set1.add(2);
+    set1.complement(set1);
+    assertTrue(set1.isEmpty());
+    
+    // Complement when other is empty
+    set1.clear();
+    set2.clear();
+    set1.add(1);
+    set1.add(2);
+    set1.complement(set2);
+    assertTrue(set1.isEmpty());
+  }
+  
 }
 
