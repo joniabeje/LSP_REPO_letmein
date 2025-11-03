@@ -15,7 +15,97 @@ public class IntegerSetTest {
     set2 = new IntegerSet();
   }
   
-  // Tests will be added here as we implement each method
+  // Test length()
+  @Test
+  public void testLength() {
+    assertEquals(0, set1.length());
+    set1.add(1);
+    assertEquals(1, set1.length());
+    set1.add(2);
+    assertEquals(2, set1.length());
+    set1.add(1); // duplicate
+    assertEquals(2, set1.length()); // should not increase
+    set1.remove(1);
+    assertEquals(1, set1.length());
+  }
+  
+  // Test isEmpty()
+  @Test
+  public void testIsEmpty() {
+    assertTrue(set1.isEmpty());
+    set1.add(1);
+    assertFalse(set1.isEmpty());
+    set1.clear();
+    assertTrue(set1.isEmpty());
+  }
+  
+  // Test contains()
+  @Test
+  public void testContains() {
+    assertFalse(set1.contains(1));
+    set1.add(1);
+    assertTrue(set1.contains(1));
+    assertFalse(set1.contains(2));
+    set1.add(2);
+    assertTrue(set1.contains(2));
+    set1.remove(1);
+    assertFalse(set1.contains(1));
+  }
+  
+  // Test add()
+  @Test
+  public void testAdd() {
+    assertEquals(0, set1.length());
+    set1.add(1);
+    assertEquals(1, set1.length());
+    assertTrue(set1.contains(1));
+    set1.add(1); // adding duplicate
+    assertEquals(1, set1.length()); // should not increase
+    set1.add(2);
+    assertEquals(2, set1.length());
+    assertTrue(set1.contains(2));
+  }
+  
+  // Test remove()
+  @Test
+  public void testRemove() {
+    set1.add(1);
+    set1.add(2);
+    assertEquals(2, set1.length());
+    set1.remove(1);
+    assertEquals(1, set1.length());
+    assertFalse(set1.contains(1));
+    assertTrue(set1.contains(2));
+    set1.remove(3); // removing non-existent item
+    assertEquals(1, set1.length()); // should not change
+  }
+  
+  // Test clear()
+  @Test
+  public void testClear() {
+    set1.add(1);
+    set1.add(2);
+    set1.add(3);
+    assertEquals(3, set1.length());
+    set1.clear();
+    assertEquals(0, set1.length());
+    assertTrue(set1.isEmpty());
+    assertFalse(set1.contains(1));
+  }
+  
+  // Test toString()
+  @Test
+  public void testToString() {
+    assertEquals("[]", set1.toString());
+    set1.add(1);
+    assertEquals("[1]", set1.toString());
+    set1.add(2);
+    assertEquals("[1, 2]", set1.toString());
+    set1.add(3);
+    assertEquals("[1, 2, 3]", set1.toString());
+    set1.clear();
+    assertEquals("[]", set1.toString());
+  }
   
 }
 

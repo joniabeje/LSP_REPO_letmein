@@ -7,10 +7,14 @@ public class IntegerSet  {
   private List<Integer> set = new ArrayList<Integer>();
 
   // Clears the internal representation of the set.
-  public void clear() { }
+  public void clear() { 
+    set.clear();
+  }
 
   // Returns the number of elements in the set.
-  public int length() { return 0; }
+  public int length() { 
+    return set.size();
+  }
 
   /*
    * Returns true if the 2 sets are equal, false otherwise;
@@ -21,7 +25,9 @@ public class IntegerSet  {
   public boolean equals(Object o) { return false; }
 
   // Returns true if the set contains the value, otherwise false.
-  public boolean contains(int value) { return false; }
+  public boolean contains(int value) { 
+    return set.contains(value);
+  }
 
   // Returns the largest item in the set (throws IllegalStateException if empty).
   public int largest()  { return 0; }
@@ -30,10 +36,16 @@ public class IntegerSet  {
   public int smallest()  { return 0; }
 
   // Adds an item to the set or does nothing if already present.
-  public void add(int item) { }
+  public void add(int item) { 
+    if (!set.contains(item)) {
+      set.add(item);
+    }
+  }
 
   // Removes an item from the set or does nothing if not there.
-  public void remove(int item) { }
+  public void remove(int item) { 
+    set.remove(Integer.valueOf(item));
+  }
 
   // Set union: modifies this to contain all unique elements in this or other.
   public void union(IntegerSet other) { }
@@ -48,10 +60,25 @@ public class IntegerSet  {
   public void complement(IntegerSet other) { }
 
   // Returns true if the set is empty, false otherwise.
-  public boolean isEmpty() { return true; }
+  public boolean isEmpty() { 
+    return set.isEmpty();
+  }
 
   // Returns a String representation; overrides Object.toString().
   @Override
-  public String toString() { return ""; }
+  public String toString() { 
+    if (set.isEmpty()) {
+      return "[]";
+    }
+    StringBuilder sb = new StringBuilder("[");
+    for (int i = 0; i < set.size(); i++) {
+      sb.append(set.get(i));
+      if (i < set.size() - 1) {
+        sb.append(", ");
+      }
+    }
+    sb.append("]");
+    return sb.toString();
+  }
 }
 
