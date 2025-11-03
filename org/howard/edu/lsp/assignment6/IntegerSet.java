@@ -15,6 +15,18 @@ public class IntegerSet  {
   private List<Integer> set = new ArrayList<Integer>();
 
   /**
+   * Validates that the other IntegerSet is not null.
+   * 
+   * @param other the IntegerSet to validate
+   * @throws NullPointerException if other is null
+   */
+  private static void requireNonNull(IntegerSet other) {
+    if (other == null) {
+      throw new NullPointerException("other set is null");
+    }
+  }
+
+  /**
    * Clears the internal representation of the set, removing all elements.
    */
   public void clear() { 
@@ -51,6 +63,21 @@ public class IntegerSet  {
       return false;
     }
     return this.set.containsAll(other.set) && other.set.containsAll(this.set);
+  }
+
+  /**
+   * Returns a hash code value for this set.
+   * The hash code is computed based on the elements in the set, ensuring that
+   * equal sets have equal hash codes. This overrides the hashCode method from
+   * the Object class to maintain consistency with equals.
+   * 
+   * @return a hash code value for this set
+   */
+  @Override
+  public int hashCode() {
+    // Order-independent; use HashSet to compute hash code since duplicates
+    // do not exist by class invariant
+    return new java.util.HashSet<>(set).hashCode();
   }
 
   /**
@@ -116,8 +143,10 @@ public class IntegerSet  {
    * that are in this set or in the other set (or both).
    * 
    * @param other the other IntegerSet to union with this set
+   * @throws NullPointerException if other is null
    */
   public void union(IntegerSet other) { 
+    requireNonNull(other);
     for (Integer item : other.set) {
       this.add(item);
     }
@@ -128,8 +157,10 @@ public class IntegerSet  {
    * elements that are present in both this set and the other set.
    * 
    * @param other the other IntegerSet to intersect with this set
+   * @throws NullPointerException if other is null
    */
   public void intersect(IntegerSet other) { 
+    requireNonNull(other);
     set.retainAll(other.set);
   }
 
@@ -138,8 +169,10 @@ public class IntegerSet  {
    * all elements that are found in the other set.
    * 
    * @param other the other IntegerSet to subtract from this set
+   * @throws NullPointerException if other is null
    */
   public void diff(IntegerSet other) { 
+    requireNonNull(other);
     set.removeAll(other.set);
   }
 
@@ -148,8 +181,10 @@ public class IntegerSet  {
    * containing all elements that are in the other set but not in this set.
    * 
    * @param other the other IntegerSet to use for the complement operation
+   * @throws NullPointerException if other is null
    */
   public void complement(IntegerSet other) { 
+    requireNonNull(other);
     List<Integer> temp = new ArrayList<Integer>(other.set);
     temp.removeAll(this.set);
     this.set.clear();

@@ -384,5 +384,80 @@ public class IntegerSetTest {
     assertTrue(set1.isEmpty());
   }
   
+  // Test idempotence of mutator operations
+  @Test
+  public void testIdempotence() {
+    // Union idempotence
+    set1.clear();
+    set2.clear();
+    set1.add(1);
+    set1.add(2);
+    set2.add(2);
+    set2.add(3);
+    set1.union(set2);
+    int sizeAfterFirst = set1.length();
+    set1.union(set2); // Second call should not change size
+    assertEquals(sizeAfterFirst, set1.length());
+    
+    // Intersect idempotence
+    set1.clear();
+    set2.clear();
+    set1.add(1);
+    set1.add(2);
+    set2.add(2);
+    set2.add(3);
+    set1.intersect(set2);
+    int sizeAfterIntersect = set1.length();
+    set1.intersect(set2); // Second call should not change
+    assertEquals(sizeAfterIntersect, set1.length());
+    
+    // Diff idempotence
+    set1.clear();
+    set2.clear();
+    set1.add(1);
+    set1.add(2);
+    set2.add(2);
+    set1.diff(set2);
+    int sizeAfterDiff = set1.length();
+    set1.diff(set2); // Second call should not change
+    assertEquals(sizeAfterDiff, set1.length());
+  }
+  
+  // Test hashCode consistency with equals
+  @Test
+  public void testHashCode() {
+    // Equal sets should have equal hash codes
+    set1.clear();
+    set2.clear();
+    set1.add(1);
+    set1.add(2);
+    set1.add(3);
+    set2.add(3);
+    set2.add(1);
+    set2.add(2);
+    assertTrue(set1.equals(set2));
+    assertEquals(set1.hashCode(), set2.hashCode());
+    
+    // Different sets can have same hash code (collision), but if equal, must have same hash
+    set1.clear();
+    set2.clear();
+    set1.add(1);
+    set2.add(2);
+    // They're not equal, so hash codes can differ (but don't have to)
+    assertFalse(set1.equals(set2));
+  }
+  
+  // Test null parameter handling
+  @Test
+  public void testNullParameterHandling() {
+    set1.add(1);
+    set1.add(2);
+    
+    assertThrows(NullPointerException.class, () -> set1.union(null));
+    assertThrows(NullPointerException.class, () -> set1.intersect(null));
+    assertThrows(NullPointerException.class, () -> set1.diff(null));
+    assertThrows(NullPointerException.class, () -> set1.complement(null));
+  }
+  
 }
 
