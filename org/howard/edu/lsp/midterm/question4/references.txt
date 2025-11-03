@@ -1,0 +1,14 @@
+References for Question 4 — Smart Campus Device System
+
+Primary Resources
+• Oracle Java Tutorials: Abstract Classes — https://docs.oracle.com/javase/tutorial/java/IandI/abstract.html
+• Oracle Java Tutorials: Interfaces — https://docs.oracle.com/javase/tutorial/java/IandI/createinterface.html
+• Oracle Java Docs: System.currentTimeMillis() — https://docs.oracle.com/javase/8/docs/api/java/lang/System.html#currentTimeMillis--
+
+AI Usage
+• Full transcript: ../../doc/ai_transcript.txt
+• Used for clarifying inheritance, interface implementation, and understanding why Device is abstract.
+
+Notes
+• Code compiles and runs with the provided Main.java unchanged.
+• No third-party dependencies used.
